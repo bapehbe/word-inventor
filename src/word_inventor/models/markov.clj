@@ -20,8 +20,9 @@
 
 (defn choose-next [link]
   (let [total (reduce + (vals link))
-        random (rand total)]
-    (loop [remaining (seq link) counter 0]
+        random (rand total)
+        sorted (sort-by #(second %) link)]
+    (loop [remaining sorted counter 0]
       (when remaining
         (let [[char freq] (first remaining)
               next (+ counter freq)]
@@ -39,9 +40,6 @@
                             (generate-word-seq chain first-char))))
   ([chain] (generate-word chain :start)))
 
-;; (def chain (with-open [rdr (clojure.java.io/reader "/usr/share/dict/words")]
-;;                  (reduce build-chain {} (map #(str % " ") (line-seq rdr)))))
-
 (defn build-chain-from-file [file]
   (with-open [rdr (io/reader (java.util.zip.GZIPInputStream. (io/input-stream file)))]
     (reduce build-chain {} (line-seq rdr))))
@@ -51,3 +49,9 @@
     (assoc-in language-source [1 :chain] chain))) 
 
 (def languages (pmap #(setup-language %) config/language-sources))
+
+(defn generate-word-for-language [language]
+  (loop [word ""]
+    (if (>= 3 (count word))
+      (recur (generate-word (get-in language [1 :chain])))
+      word)))
