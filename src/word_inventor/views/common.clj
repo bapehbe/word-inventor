@@ -5,7 +5,7 @@
 (defpartial layout [& content]
             (html5
               [:head
-               [:title "word-inventor"]
+               [:title "word inventor"]
                (include-css "/css/reset.css")]
               [:body
                [:div#wrapper
