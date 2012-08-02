@@ -13,12 +13,12 @@
                   :end)
                string) '(:end)))
 
-(defn build-chain
+(defn- build-chain
   "Returns a map like {char1 {char2 freq1, char3 freq3}}"
   [chain string]
   (first (reduce add-to-chain [chain :start] (prepare-str string))))
 
-(defn choose-next [link]
+(defn- choose-next [link]
   (let [total (reduce + (vals link))
         random (rand total)
         sorted (sort-by #(second %) link)]
@@ -48,10 +48,25 @@
   (let [chain (build-chain-from-file source)]
     (assoc-in language-source [1 :chain] chain))) 
 
-(def languages (pmap #(setup-language %) config/language-sources))
+(def ^:private ^:const languages
+  (let [langs (pmap #(setup-language %) config/language-sources)]
+    (reduce #(apply assoc %1 %2) {} langs)))
 
-(defn generate-word-for-language [language]
+(defn generate-word-for-language [lang-id]
   (loop [word ""]
     (if (>= 3 (count word))
-      (recur (generate-word (get-in language [1 :chain])))
+      (recur (generate-word (get-in languages [lang-id :chain])))
       word)))
+
+(defn- dissoc-in [data keys & dissoc-keys]
+  (assoc-in data keys (apply dissoc (get-in data keys) dissoc-keys))) 
+
+(defn get-lang-descs []
+  "return a collection of language descriptions [lang-id {:title title}]"
+  (map #(dissoc-in % [1] :source :chain) languages))
+
+(defn get-id [lang-desc]
+  (first lang-desc))
+
+(defn get-title [lang-desc]
+  (-> lang-desc second :title))

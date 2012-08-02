@@ -2,15 +2,16 @@
   (:require [word-inventor.views.common :as common]
             [word-inventor.models.markov :as lang]
             [word-inventor.config :as config])
-  (:use [noir.core :only [defpage defpartial]]))
+  (:use [noir.core :only [defpage defpartial]]
+        [noir.fetch.remotes :only [defremote]]))
 
 (defpartial word [l]
-  [:div {:class "word"} (lang/generate-word-for-language l)])
+  [:div {:class "word"} (lang/generate-word-for-language (lang/get-id l))])
 
 (defpartial language [l]
-  [:div {:id (first l) :class "language"}
-   [:h1 (-> l second :title)]
-   (for [_ (range 10)] (word l))])
+  [:div {:id (lang/get-id l) :class "language"}
+   [:h1 (lang/get-title l)]
+   (for [_ (range 25)] (word l))])
 
 (defpartial languages [langs]
   [:div {:id "languages"}
@@ -18,4 +19,8 @@
 
 (defpage "/words" []
   (common/layout
-   (languages lang/languages)))
+   (languages (lang/get-lang-descs))))
+
+(comment defpage "/words" []
+  (common/layout
+   [:div {:id "languages"}]))
