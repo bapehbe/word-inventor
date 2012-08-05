@@ -48,6 +48,7 @@
   (let [chain (build-chain-from-file source)]
     (assoc-in language-source [1 :chain] chain))) 
 
+;;; languages will be assigned at compile time!
 (def ^:private ^:const languages
   (let [langs (pmap #(setup-language %) config/language-sources)]
     (reduce #(apply assoc %1 %2) {} langs)))
@@ -62,7 +63,7 @@
   (assoc-in data keys (apply dissoc (get-in data keys) dissoc-keys))) 
 
 (defn get-lang-descs []
-  "return a collection of language descriptions [lang-id {:title title}]"
+  "return a collection of language descriptions [lang-id {:title title & attrs}]"
   (map #(dissoc-in % [1] :source :chain) languages))
 
 (defn get-id [lang-desc]
