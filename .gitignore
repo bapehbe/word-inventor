@@ -4,3 +4,7 @@ pom.xml
 /classes/
 .lein-deps-sum
 .cake
+/resources/private/
+/resources/public/cljs/
+/.lein-cljsbuild-repl/
+/out/
