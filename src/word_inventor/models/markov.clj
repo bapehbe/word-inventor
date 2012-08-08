@@ -1,6 +1,5 @@
 (ns word-inventor.models.markov
-  (:require [word-inventor.config :as config]
-            [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io]))
 
 (defn- add-to-chain [[chain c1] c2]
   (vector
@@ -44,25 +43,25 @@
   (with-open [rdr (io/reader (java.util.zip.GZIPInputStream. (io/input-stream file)))]
     (reduce build-chain {} (line-seq rdr))))
 
-(defn- setup-language [[id {:keys [source]} :as language-source]]
+(defn language [id {:keys [source] :as language-source}]
   (let [chain (build-chain-from-file source)]
-    (assoc-in language-source [1 :chain] chain))) 
+    (hash-map id (assoc language-source :chain chain)))) 
 
-;;; languages will be assigned at compile time!
-(def ^:private ^:const languages
-  (let [langs (pmap #(setup-language %) config/language-sources)]
-    (reduce #(apply assoc %1 %2) {} langs)))
-
-(defn generate-word-for-language [lang-id]
+(defn make-langs [& langs]
+  {:pre [(even? (count langs))]}
+  (let [langs (pmap #(apply language %) (partition 2 langs))]
+    (apply merge langs)))
+  
+(defn generate-word-for-language [lang-id languages]
   (loop [word ""]
     (if (>= 3 (count word))
       (recur (generate-word (get-in languages [lang-id :chain])))
       word)))
 
 (defn- dissoc-in [data keys & dissoc-keys]
-  (assoc-in data keys (apply dissoc (get-in data keys) dissoc-keys))) 
+  (assoc-in data keys (apply dissoc (get-in data keys) dissoc-keys)))
 
-(defn get-lang-descs []
+(defn get-lang-descs [languages]
   "return a collection of language descriptions [lang-id {:title title & attrs}]"
   (map #(dissoc-in % [1] :source :chain) languages))
 
