@@ -1,9 +1,7 @@
 (ns word-inventor.server
-  (:require [noir.server :as server]
-            [noir.fetch.remotes :as remotes]))
+  (:require [noir.server :as server]))
 
 (server/load-views-ns 'word-inventor.views)
-(server/add-middleware remotes/wrap-remotes)
 
 (defn -main [& m]
   (let [mode (keyword (or (first m) :dev))
