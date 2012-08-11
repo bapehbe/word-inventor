@@ -11,6 +11,6 @@
 (defremote generate-words [l n]
   (for [_ (range n)] (lang/generate-word-for-language l config/languages)))
 
-(defpage "/words" []
+(defpage "/" []
   (common/layout
    [:div {:id "languages"}]))
