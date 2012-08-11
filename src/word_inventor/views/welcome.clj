@@ -2,6 +2,6 @@
   (:require [word-inventor.views.common :as common])
   (:use [noir.core :only [defpage defpartial]]))
 
-(defpage "/words" []
+(defpage "/" []
   (common/layout
    [:div {:id "languages"}]))
