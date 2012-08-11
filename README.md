@@ -1,6 +1,6 @@
 # word-inventor
 
-A silly website generating 'words' in different languages using Markov chains.
+A silly website generating 'words' in different languages using Markov chains, you can see it in action on [Heroku](http://word-inventor.herokuapp.com).
 I built it mainly to get a feeling of ClojureScript.
 This version uses [noir](https://github.com/ibdknox/noir) on the server-side and [jayq](https://github.com/ibdknox/jayq) [crate](https://github.com/ibdknox/crate) on the client side. Frequency tables are generated during compile time, so compile is rather slow. Words are generated on the server and sent over to the client using [fetch](https://github.com/ibdknox/fetch)
 For a (somewhat slower) version where all calcs are done on the client side see the cljs-all branch.
