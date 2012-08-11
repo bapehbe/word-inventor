@@ -13,7 +13,7 @@ lein trampoline cljsbuild once
 lein run
 ```
 
-To add a language put a big gzipped text written in this language (a book) to resources/private and edit `src/word-inventor/config.clj
+To add a language put a big gzipped text written in this language (a book) to resources/private and edit `src/word-inventor/config.clj`
 
 ## License
 
