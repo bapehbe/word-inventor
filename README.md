@@ -1,6 +1,6 @@
 # word-inventor
 
-A silly website generating 'words' in different languages using Markov chains.
+A silly website generating 'words' in different languages using Markov chains, you can see it in action on [Heroku](http://word-inventor.herokuapp.com).
 I built it mainly to get a feeling of ClojureScript.
 This version does word generation on the client side, frequency tables are generated at compile time.
 For a client-server version see the master branch.
