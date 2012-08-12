@@ -2,8 +2,8 @@
 
 A silly website generating 'words' in different languages using Markov chains.
 I built it mainly to get a feeling of ClojureScript.
-This version uses [noir](https://github.com/ibdknox/noir) on the server-side and [jake](https://github.com/ibdknox/jake) [crate](https://github.com/ibdknox/crate) on the client side. Frequency tables are generated during compile time and send over to the client using [fetch](https://github.com/ibdknox/fetch)
-For a (somewhat slower) version where all calcs are done on the client side see the cljs-all branch.
+This version does word generation on the client side, frequency tables are generated at compile time.
+For a client-server version see the master branch.
 
 ## Usage
 
