@@ -6,8 +6,7 @@
                            [jayq "0.1.0-SNAPSHOT"]
                            [crate "0.1.0-SNAPSHOT"]
                            [fetch "0.1.0-SNAPSHOT"]
-                           ;; [cssgen "0.2.6"]
-                           ]
+                           [enlive "1.0.1"]]
             :exclusions [org.clojure/clojure]
             :plugins [[lein-cljsbuild "0.2.4"]]
             :main ^{:skip-aot true} word-inventor.server
