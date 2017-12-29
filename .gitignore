@@ -1,9 +1,6 @@
-pom.xml
-*jar
-/lib/
-/classes/
-.lein-deps-sum
-.cake
-/resources/public/cljs/
-/.lein-cljsbuild-repl/
-/out/
+/*.log
+/target
+/*-init.clj
+/resources/public/js
+out
+src/cljs/word_inventor2/languages.cljs

@@ -1,7 +1,0 @@
-body {background: #444; padding: 50px; color: #ccc; font-family:"Helvetica Neue"; }
-a { text-decoration:none; }
-    
-#wrapper { width:924px; margin: 0 auto; }
-
-.container { float:left; display:inline; }
-.button { padding: 15px 10px; min-width:50px; float:left; display:inline; border-radius: 20px; text-align:center; margin-right:10px; margin-bottom:10px; position:relative; font-size:24px; }
