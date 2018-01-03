@@ -1,12 +1,12 @@
 (defproject word-inventor2 "0.1.0-SNAPSHOT"
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.9.946"]
                  [reagent "0.8.0-alpha2"]]
   :main word-inventor2.generator
 
   :min-lein-version "2.5.3"
 
-  :source-paths ["src/clj"]
+  :source-paths ["src/clj" "src/cljc"]
 
   :plugins [[lein-cljsbuild "1.1.4"]]
 
@@ -23,7 +23,8 @@
   {:dev
    {:dependencies [
                    [figwheel-sidecar "0.5.14"]
-                   [com.cemerick/piggieback "0.2.2"]]
+                   [com.cemerick/piggieback "0.2.2"]
+                   [org.clojure/test.check "0.9.0"]]
 
     :plugins      [[lein-figwheel "0.5.14"]
                    [lein-doo "0.1.7"]]
@@ -32,7 +33,7 @@
   :cljsbuild
   {:builds
    [{:id           "dev"
-     :source-paths ["src/cljs"]
+     :source-paths ["src/cljs" "src/cljc"]
      :figwheel     {:on-jsload "word-inventor2.core/reload"}
      :compiler     {:main                 word-inventor2.core
                     :optimizations        :none
