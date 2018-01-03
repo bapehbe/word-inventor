@@ -39,9 +39,9 @@
 (defn update-language [lang ratom]
   (swap! ratom assoc-in [:languages lang] (generate-words lang (:word-count @ratom))))
 
-(defn language-button [lang ratom]
-  [:input {:type "button" :value lang
-           :on-click #(update-language lang ratom)}] )
+(defn language-button [lang-desc ratom]
+  [:input {:type "button" :value (markov/get-title lang-desc)
+           :on-click #(update-language (markov/get-id lang-desc) ratom)}] )
 
 (defn generated-words [lang ratom]
   (let [words (get-in @ratom [:languages lang])
@@ -54,10 +54,11 @@
   [:div
    [:div [word-count-selector ratom]]
    [:div
-    (for [lang (keys langs/languages)]
-      [:div {:key lang}
-       [language-button lang ratom]
-       [generated-words lang ratom]])]])
+    (for [lang-desc (markov/get-lang-descs langs/languages)
+          :let [id (markov/get-id lang-desc)]]
+      [:div {:key id}
+       [language-button lang-desc ratom]
+       [generated-words id ratom]])]])
 
 
 
