@@ -29,11 +29,11 @@
 
 (defn word-count-selector [ratom]
   [:input {:type "range"
-           :value default-word-count
+           :value (:word-count @ratom)
            :min 1
            :max default-max-word-count
            :style {:width "100%"}
-           :on-input (fn [e]
+           :on-change (fn [e]
                         (update-word-count (.. e -target -value) ratom))}])
 
 (defn update-language [lang ratom]
@@ -56,7 +56,9 @@
    [:div
     (for [lang-desc (markov/get-lang-descs langs/languages)
           :let [id (markov/get-id lang-desc)]]
-      [:div {:key id}
+      [:div {:key id
+             :style {:display "inline-block"
+                     :width "200px"}}
        [language-button lang-desc ratom]
        [generated-words id ratom]])]])
 
