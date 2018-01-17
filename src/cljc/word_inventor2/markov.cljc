@@ -2,6 +2,8 @@
   (:require [word-inventor2.spec :as spec]
             [clojure.spec.alpha :as s]))
 
+(def ^:const MAX_WORD_LENGTH 50)
+
 (defn- choose-next [link]
   (let [total (reduce + (vals link))
         random (rand total)
@@ -18,6 +20,11 @@
             (let [next (choose-next (chain first))]
                  (cons next (lazy-seq (generate-word-seq chain next)))))
 
+(defn total-count [chain]
+  (reduce +
+          (flatten
+           (map vals (vals chain)))))
+
 (s/fdef generate-word
         :args (s/alt :start (s/cat :chain ::spec/chain)
                      :continue (s/cat :chain ::spec/chain
@@ -25,8 +32,11 @@
         :ret string?)
 (defn generate-word
   ([chain first-char]
-     (apply str (take-while #(not= :end %)
-                            (generate-word-seq chain first-char))))
+   (let [indexed-char-seq (map-indexed vector (generate-word-seq chain first-char))]
+     (apply str (map second (take-while (fn [[idx c]]
+                                          (and (< idx MAX_WORD_LENGTH)
+                                               (not= c :end)))
+                                        indexed-char-seq)))))
   ([chain] (generate-word chain :start)))
 
 (defn generate-word-for-language [lang-id languages]
